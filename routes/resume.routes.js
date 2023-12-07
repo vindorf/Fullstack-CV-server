@@ -53,7 +53,7 @@ router.post("/create-resume", async (req, res, next) => {
 });
 
 router.get("/resumes/:userId", async (req, res, next) => {
-  const {userId} = req.params
+  const { userId } = req.params;
   try {
     const allResumes = await User.findById(userId).populate("resumes");
     res.json(allResumes);
@@ -89,7 +89,6 @@ router.delete("/resume/delete/:userId/:resumeId", async (req, res, next) => {
   }
 
   try {
-
     const deletedResume = await Resume.findByIdAndDelete(resumeId);
 
     if (!deletedResume) {
@@ -108,6 +107,5 @@ router.delete("/resume/delete/:userId/:resumeId", async (req, res, next) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 module.exports = router;

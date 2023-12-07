@@ -11,7 +11,7 @@ router.post("/signup", (req, res, next) => {
   const { email, password } = req.body;
 
   // Check if the email or password or name is provided as an empty string
-  if (!email || !password ) {
+  if (!email || !password) {
     res.status(400).json({ message: "Provide email, password and name" });
     return;
   }
@@ -71,9 +71,9 @@ router.post("/login", (req, res, next) => {
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
 
       if (passwordCorrect) {
-        const { _id, email} = foundUser;
+        const { _id, email } = foundUser;
 
-        const payload = { _id, email};
+        const payload = { _id, email };
 
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
@@ -87,7 +87,6 @@ router.post("/login", (req, res, next) => {
     })
     .catch((err) => res.status(500).json({ message: "Internal Server Error" }));
 });
-
 
 router.delete("/delete-account/:userId", (req, res, next) => {
   const { userId } = req.params;
