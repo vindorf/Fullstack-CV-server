@@ -53,8 +53,9 @@ router.post("/create-resume", async (req, res, next) => {
 });
 
 router.get("/resumes/:userId", async (req, res, next) => {
+  const {userId} = req.params
   try {
-    const allResumes = await User.find().populate("resumes");
+    const allResumes = await User.findById(userId).populate("resumes");
     res.json(allResumes);
   } catch (err) {
     res.json(err);
