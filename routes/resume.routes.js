@@ -6,7 +6,7 @@ const Resume = require("../models/Resume.model");
 const User = require("../models/User.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-router.post("/create-resume", async (req, res, next) => {
+router.post("/resumes", async (req, res, next) => {
   try {
     const {
       title,
