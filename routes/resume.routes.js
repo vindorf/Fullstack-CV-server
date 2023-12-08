@@ -62,6 +62,16 @@ router.get("/resumes/:userId", async (req, res, next) => {
   }
 });
 
+router.get("/resume/:resumeId", async (req,res,next) => {
+  const {resumeId} = req.params;
+  try{
+    const oneResume = await Resume.findById(resumeId);
+    res.json(oneResume)
+  } catch(err) {
+    res.json(err);
+  }
+})
+
 router.put("/resume/edit/:resumeId", async (req, res, next) => {
   try {
     const { resumeId } = req.params;
@@ -80,8 +90,8 @@ router.put("/resume/edit/:resumeId", async (req, res, next) => {
   }
 });
 
-router.delete("/resume/delete/:userId/:resumeId", async (req, res, next) => {
-  const { userId, resumeId } = req.params;
+router.delete("/resume/delete/:resumeId", async (req, res, next) => {
+  const {resumeId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(resumeId)) {
     res.status(400).json({ message: "Specified id is not valid" });
