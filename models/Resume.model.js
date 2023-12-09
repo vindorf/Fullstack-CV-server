@@ -6,7 +6,13 @@ const resumeSchema = new Schema({
   intro: String,
   firstName: { type: String },
   lastName: { type: String },
-  address: { street: String, houseNr: String, city: String, country: String },
+  address: {
+    street: String,
+    houseNr: String,
+    postalCode: String,
+    city: String,
+    country: String,
+  },
   phone: { type: String },
   education: [
     {
@@ -28,8 +34,8 @@ const resumeSchema = new Schema({
     },
   ],
   img: String,
-  skills: { type: Schema.Types.ObjectId, ref: "Skill" },
-  certificates: { type: Schema.Types.ObjectId, ref: "Certificate" },
+  skills: [String], // changed it to array of string because we are not using the skill model yet.
+  certificates: [String], // changed it to array of string because we are not using the certificates model yet.
   user: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
