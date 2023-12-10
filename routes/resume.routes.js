@@ -62,15 +62,15 @@ router.get("/resumes/:userId", async (req, res, next) => {
   }
 });
 
-router.get("/resume/:resumeId", async (req,res,next) => {
-  const {resumeId} = req.params;
-  try{
+router.get("/resume/:resumeId", async (req, res, next) => {
+  const { resumeId } = req.params;
+  try {
     const oneResume = await Resume.findById(resumeId);
-    res.json(oneResume)
-  } catch(err) {
+    res.json(oneResume);
+  } catch (err) {
     res.json(err);
   }
-})
+});
 
 router.put("/resume/edit/:resumeId", async (req, res, next) => {
   try {
@@ -91,7 +91,7 @@ router.put("/resume/edit/:resumeId", async (req, res, next) => {
 });
 
 router.delete("/resume/delete/:resumeId", async (req, res, next) => {
-  const {resumeId } = req.params;
+  const { resumeId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(resumeId)) {
     res.status(400).json({ message: "Specified id is not valid" });
@@ -114,6 +114,30 @@ router.delete("/resume/delete/:resumeId", async (req, res, next) => {
       message: `Resume with ID ${resumeId} has been removed successfully.`,
     });
   } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/delete/user/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      res.status(404).json({ message: " not found" });
+      return;
+    }
+    res.json({
+      message: `User with ID ${userId} has been removed successfully.`,
+    });
+
+  } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
