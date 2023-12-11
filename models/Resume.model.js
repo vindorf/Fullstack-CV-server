@@ -3,9 +3,9 @@ const { Schema, model } = mongoose;
 
 const resumeSchema = new Schema({
   title: String,
-  intro: String,
   firstName: { type: String },
   lastName: { type: String },
+  phone: { type: String },
   address: {
     street: String,
     houseNr: String,
@@ -13,29 +13,14 @@ const resumeSchema = new Schema({
     city: String,
     country: String,
   },
-  phone: { type: String },
-  education: [
-    {
-      instituteName: String,
-      degreeName: String,
-      startYear: Number,
-      endYear: Number,
-      description: String,
-    },
-  ],
-  languages: { languageName: String, languageLevel: String },
-  workExperience: [
-    {
-      companyName: String,
-      jobTitle: String,
-      startYear: Number,
-      endYear: Number,
-      description: String,
-    },
-  ],
+  email: {type: String},
+  skills: [String],
+  education: [String],
+  language: { languageName: String, languageLevel: String },
+  intro: String,
+  workExperience: {type: String},
   img: String,
-  skills: [String], // changed it to array of string because we are not using the skill model yet.
-  certificates: [String], // changed it to array of string because we are not using the certificates model yet.
+  certificate: [String], 
   user: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
