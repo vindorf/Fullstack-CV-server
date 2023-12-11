@@ -44,7 +44,6 @@ router.post("/resumes", async (req, res, next) => {
 
     await User.findByIdAndUpdate(userId, { $push: { resumes: newResume._id } });
     await Resume.findByIdAndUpdate(newResume._id, { $push: { user: userId } });
-
     res.json(newResume);
   } catch (error) {
     console.error(error);
