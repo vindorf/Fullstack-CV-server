@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const resumeSchema = new Schema({
+  resumeTitle : String,
   title: String,
   firstName: { type: String },
   lastName: { type: String },

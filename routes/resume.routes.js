@@ -8,11 +8,10 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 router.post("/resumes", async (req, res, next) => {
   try {
-    const { firstName, lastName, userId } = req.body;
+    const { resumeTitle, userId } = req.body;
 
     const newResume = await Resume.create({
-      firstName,
-      lastName,
+      resumeTitle,
       userId: userId,
     });
 
