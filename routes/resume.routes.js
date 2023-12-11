@@ -8,37 +8,11 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 router.post("/resumes", async (req, res, next) => {
   try {
-    const {
-      title,
-      intro,
-      firstName,
-      lastName,
-      address,
-      phone,
-      skills,
-      certificate,
-      education,
-      languages,
-      workExperience,
-      resume,
-      img,
-      userId,
-    } = req.body;
+    const { firstName, lastName, userId } = req.body;
 
     const newResume = await Resume.create({
-      title,
-      intro,
       firstName,
       lastName,
-      address,
-      phone,
-      skills,
-      certificate,
-      education,
-      languages,
-      workExperience,
-      resume,
-      img,
       userId: userId,
     });
 
@@ -136,7 +110,6 @@ router.delete("/delete/user/:userId", async (req, res, next) => {
     res.json({
       message: `User with ID ${userId} has been removed successfully.`,
     });
-
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
