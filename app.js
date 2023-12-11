@@ -12,13 +12,10 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
-const resumeRouter = require("./routes/resume.routes");     //isAuthenticated,
+const resumeRouter = require("./routes/resume.routes");
 app.use("/api", isAuthenticated, resumeRouter);
 
-const taskRouter = require("./routes/task.routes");  //isAuthenticated,
-app.use("/api", isAuthenticated, taskRouter);
-
-const authRouter = require("./routes/auth.routes");  //isAuthenticated,
+const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
 
 require("./error-handling")(app);

@@ -44,7 +44,6 @@ router.post("/resumes", async (req, res, next) => {
 
     await User.findByIdAndUpdate(userId, { $push: { resumes: newResume._id } });
     await Resume.findByIdAndUpdate(newResume._id, { $push: { user: userId } });
-
     res.json(newResume);
   } catch (error) {
     console.error(error);
@@ -62,15 +61,15 @@ router.get("/resumes/:userId", async (req, res, next) => {
   }
 });
 
-router.get("/resume/:resumeId", async (req,res,next) => {
-  const {resumeId} = req.params;
-  try{
+router.get("/resume/:resumeId", async (req, res, next) => {
+  const { resumeId } = req.params;
+  try {
     const oneResume = await Resume.findById(resumeId);
-    res.json(oneResume)
-  } catch(err) {
+    res.json(oneResume);
+  } catch (err) {
     res.json(err);
   }
-})
+});
 
 router.put("/resume/edit/:resumeId", async (req, res, next) => {
   try {
@@ -91,7 +90,7 @@ router.put("/resume/edit/:resumeId", async (req, res, next) => {
 });
 
 router.delete("/resume/delete/:resumeId", async (req, res, next) => {
-  const {resumeId } = req.params;
+  const { resumeId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(resumeId)) {
     res.status(400).json({ message: "Specified id is not valid" });
