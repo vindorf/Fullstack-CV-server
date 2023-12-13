@@ -17,6 +17,17 @@ const resumeSchema = new Schema({
   educationTitle: String,
   institute: String,
   educationDescription: String,
+
+  studyyear1: String,
+  educationTitle1: String,
+  institute1: String,
+  educationDescription1: String,
+
+  studyyear2: String,
+  educationTitle2: String,
+  institute2: String,
+  educationDescription2: String,
+
   language: String,
   intro: String,
 
@@ -24,6 +35,26 @@ const resumeSchema = new Schema({
   company: String,
   role: String,
   jobDescription: String,
+
+  workingyear1: String,
+  company1: String,
+  role1: String,
+  jobDescription1: String,
+
+  workingyear2: String,
+  company2: String,
+  role2: String,
+  jobDescription2: String,
+
+  workingyear3: String,
+  company3: String,
+  role3: String,
+  jobDescription3: String,
+
+  workingyear4: String,
+  company4: String,
+  role4: String,
+  jobDescription4: String,
 
   img: String,
   certificate: [String],
