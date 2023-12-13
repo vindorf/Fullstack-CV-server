@@ -51,11 +51,6 @@ const resumeSchema = new Schema({
   role3: String,
   jobDescription3: String,
 
-  workingyear4: String,
-  company4: String,
-  role4: String,
-  jobDescription4: String,
-
   img: String,
   certificate: [String],
   user: { type: Schema.Types.ObjectId, ref: "User" },
