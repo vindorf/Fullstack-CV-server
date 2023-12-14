@@ -44,6 +44,16 @@ router.get("/resume/show/:resumeId", async (req, res, next) => {
   }
 });
 
+router.get("/resume/show-look2/:resumeId", async (req, res, next) => {
+  const { resumeId } = req.params;
+  try {
+    const oneResume = await Resume.findById(resumeId);
+    res.json(oneResume);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 router.get("/resume/:resumeId", async (req, res, next) => {
   const { resumeId } = req.params;
   try {
