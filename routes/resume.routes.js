@@ -1,10 +1,33 @@
 const router = require("express").Router();
-
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
 const mongoose = require("mongoose");
 
 const Resume = require("../models/Resume.model");
 const User = require("../models/User.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "movie-project", 
+    format: async (req, file) => "jpg", 
+    public_id: (req, file) => "sample_image", 
+  },
+});
+
+const upload = multer({ storage });
+const uploadMiddleware = upload.single("image");
+router.post("/upload", isAuthenticated, uploadMiddleware, (req, res) => {
+  res.json({ url: req.file.path });
+});
 
 router.post("/resumes", async (req, res, next) => {
   try {
