@@ -2,15 +2,16 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
+const mongoose = require("mongoose");
 const { isAuthenticated } = require("./../middleware/jwt.middleware.js");
 const router = express.Router();
 const saltRounds = 10;
 
 router.post("/signup", (req, res, next) => {
-  const { email, password, name } = req.body;
+  const { email, password } = req.body;
 
   // Check if the email or password or name is provided as an empty string
-  if (!email || !password || !name) {
+  if (!email || !password) {
     res.status(400).json({ message: "Provide email, password and name" });
     return;
   }
@@ -37,12 +38,12 @@ router.post("/signup", (req, res, next) => {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
 
-      return User.create({ email, password: hashedPassword, name });
+      return User.create({ email, password: hashedPassword });
     })
     .then((createdUser) => {
-      const { email, name, _id } = createdUser;
+      const { email, _id } = createdUser;
 
-      const user = { email, name, _id };
+      const user = { email, _id };
 
       res.status(201).json({ user: user });
     })
@@ -70,9 +71,9 @@ router.post("/login", (req, res, next) => {
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
 
       if (passwordCorrect) {
-        const { _id, email, name } = foundUser;
+        const { _id, email } = foundUser;
 
-        const payload = { _id, email, name };
+        const payload = { _id, email };
 
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
@@ -85,6 +86,23 @@ router.post("/login", (req, res, next) => {
       }
     })
     .catch((err) => res.status(500).json({ message: "Internal Server Error" }));
+});
+
+router.delete("/delete-account/:userId", (req, res, next) => {
+  const { userId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+
+  User.findByIdAndDelete(userId)
+    .then(() =>
+      res.json({
+        message: `User with ${userId} is removed successfully.`,
+      })
+    )
+    .catch((error) => res.json(error));
 });
 
 router.get("/verify", isAuthenticated, (req, res, next) => {
