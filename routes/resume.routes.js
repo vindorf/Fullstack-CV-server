@@ -17,15 +17,15 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "movie-project", 
-    format: async (req, file) => "jpg", 
-    public_id: (req, file) => "sample_image", 
+    folder: "movie-project",
+    format: async (req, file) => "jpg",
+    public_id: (req, file) => "sample_image",
   },
 });
 
 const upload = multer({ storage });
 const uploadMiddleware = upload.single("image");
-router.post("/upload", isAuthenticated, uploadMiddleware, (req, res) => {
+router.post("/upload", uploadMiddleware, (req, res) => {
   res.json({ url: req.file.path });
 });
 
